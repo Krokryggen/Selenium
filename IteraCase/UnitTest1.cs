@@ -41,25 +41,27 @@ namespace IteraCase
 
         public void AcceptAlert()
         {
-            Thread.Sleep(2000); //TODO: Må erstattes
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.SwitchTo().Alert().Text);
             driver.SwitchTo().Alert().Accept();
         }
 
         [TestMethod]
         public void CreateAccount()
         {
-            string newUserName = "Kaurin999";
+            string newUserName = "Kaurin444";
             string newPassword = "12345";
 
             Setup();                   
 
             driver.FindElement(By.CssSelector("#signin2")).Click();
-            Thread.Sleep(2000); //TODO: Må erstattes
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#sign-password")));
+            Thread.Sleep(2000);
             driver.FindElement(By.CssSelector("#sign-username")).SendKeys(newUserName);
             driver.FindElement(By.CssSelector("#sign-password")).SendKeys(newPassword);
             driver.FindElement(By.CssSelector("#signInModal > div > div > div.modal-footer > button.btn.btn-primary")).Click();
 
-            Thread.Sleep(2000); //TODO: Må erstattes
+            new WebDriverWait(driver, TimeSpan.FromSeconds(3)).Until(driver => driver.SwitchTo().Alert().Text);
+            
             string successMessage = driver.SwitchTo().Alert().Text;
             driver.SwitchTo().Alert().Accept();
                    
@@ -76,33 +78,36 @@ namespace IteraCase
         {
             Login();
 
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#nameofuser")));
             string nameOfUser = driver.FindElement(By.CssSelector("#nameofuser")).Text;
             Assert.AreEqual(nameOfUser, "Welcome Kaurin");
 
             driver.FindElement(By.CssSelector("#navbarExample > ul > li.nav-item.active > a")).Click();
             driver.FindElement(By.XPath("//a[contains(text(), 'Phones')]")).Click();
-            Thread.Sleep(2000); //TODO: Må erstattes
-            driver.FindElement(By.XPath("//a[contains(text(), 'Samsung galaxy s6')]")).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")));
+            driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")).Click();
             driver.FindElement(By.CssSelector("#tbodyid > div.row > div > a")).Click();
             AcceptAlert();
 
             driver.FindElement(By.CssSelector("#navbarExample > ul > li.nav-item.active > a")).Click();
             driver.FindElement(By.XPath("//a[contains(text(), 'Laptops')]")).Click();
-            Thread.Sleep(2000); //TODO: Må erstattes
-            driver.FindElement(By.XPath("//a[contains(text(), 'Sony vaio i5')]")).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")));
+            Thread.Sleep(2000);
+            driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")).Click();
             driver.FindElement(By.CssSelector("#tbodyid > div.row > div > a")).Click();
             AcceptAlert();
 
             driver.FindElement(By.CssSelector("#navbarExample > ul > li.nav-item.active > a")).Click();
             driver.FindElement(By.XPath("//a[contains(text(), 'Monitors')]")).Click();
-            Thread.Sleep(2000); //TODO: Må erstattes
-            driver.FindElement(By.XPath("//a[contains(text(), 'Apple monitor 24')]")).Click();
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")));
+            Thread.Sleep(2000);
+            driver.FindElement(By.CssSelector("#tbodyid > div:nth-child(1) > div > div > h4 > a")).Click();
             driver.FindElement(By.CssSelector("#tbodyid > div.row > div > a")).Click();
             AcceptAlert();
 
             driver.FindElement(By.CssSelector("#cartur")).Click();
             driver.FindElement(By.CssSelector("#page-wrapper > div > div.col-lg-1 > button")).Click();
-            Thread.Sleep(2000); //TODO: Må erstattes
+            new WebDriverWait(driver, TimeSpan.FromSeconds(5)).Until(driver => driver.FindElement(By.CssSelector("#name")));
 
             driver.FindElement(By.CssSelector("#name")).SendKeys("Marius");
             driver.FindElement(By.CssSelector("#country")).SendKeys("Norge");
@@ -120,15 +125,8 @@ namespace IteraCase
 
             Assert.AreEqual(purchaseConfirmed, "Thank you for your purchase!");
 
-
-
         }
 
-
-
-
-        }
-
-    
+     }  
 
 }
